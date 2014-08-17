@@ -14,14 +14,14 @@ Innanzitutto occorre dire che la matrice (che come sappiamo è un vettore plurid
 Per il “popolamento” della matrice ho utilizzato due cicli for, uno per scorrere le righe e uno annidato per scorrere le colonne in modo da riuscire ad organizzare la matrice in un vettore lineare.
 
 Mentre per la procedura ricorsiva del calcolo matrice ho utilizzato 3 casi base:
-Ordine matrice uguale a 1
-		il determinante è dato dall'elemento stesso (m[0][0])
-Ordine matrice uguale a 2
-		il determinante è dato da: m[0][0]*m[1][1]-m[0][1]*m[1][0]
-Ordine matrice uguale a 3
-in questo caso per calcolare il determinante della matrice utilizzo la regola di Sarrus il cui determinante è dato da:
+- Ordine matrice uguale a 1: il determinante è dato dall'elemento stesso (m[0][0])
+- Ordine matrice uguale a 2: il determinante è dato da: m[0][0]*m[1][1]-m[0][1]*m[1][0]
+- Ordine matrice uguale a 3: in questo caso per calcolare il determinante della matrice utilizzo la regola di Sarrus il cui determinante è dato da:
+
 m[0][0]*m[1][1]*m[2][2]+m[0][1]*m[1][2]*m[2][0]+
+
 m[0][2]*m[1][0]*m[2][1]-m[2][0]*m[1][1]*m[0][2]-
+
 m[2][1]*m[1][2]*m[0][0]-m[2][2]*m[1][0]*m[0][1]
 
 Nel caso che invece la matrice inserita fosse di ordine 4 il programma utilizza il teorema di Laplace  il quale dice che: il determinante di una matrice è uguale alla somma dei prodotti degli elementi  di una qualunque colonna per i rispettivi complementi algebrici.
