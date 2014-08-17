@@ -21,9 +21,9 @@ sottomatrice: .space 36
 .globl main
 
 main:
-	li $v0,4				#Seleziono il print_string
+	li $v0,4			#Seleziono il print_string
 	la $a0,intro			#$a0 contiene l'indirizzo di intro
-	syscall					#lancio print_string 
+	syscall				#lancio print_string 
 	
 	#POPOLAMENTO MATRICE
 	jal popola_matrice		#jump and link alla procedura popola matrice
@@ -33,26 +33,26 @@ main:
 	#CALCOLO DETERMINANTE DELLA MATRICE
 	move $a0, $s0			#sposto il contenuto di $s0,contenente l'ordine della matrice, in $a0 
 	move $a1, $s1			#sposto il contenuto di $s1,contenente l'ordine della matrice, in $a1 
-	jal laplace				#jump and link alla procedura laplace
+	jal laplace			#jump and link alla procedura laplace
 	move $t0,$v0			#sposto il contenuto di $v0,contenente il determinante della matrice, in $t0
 					
 	
 	#STAMPA DEL DETERMINANTE DELLA MATRICE
-	li $v0,4				#Seleziono il print_string
-	la $a0,det				#$a0 contiene l'indirizzo di det
-	syscall					#lancio print_string
+	li $v0,4			#Seleziono il print_string
+	la $a0,det			#$a0 contiene l'indirizzo di det
+	syscall				#lancio print_string
 	
-	li $v0,1				#Seleziono il print_string
+	li $v0,1			#Seleziono il print_string
 	move $a0,$t0			# $a0 = $t0
- 	syscall					#lancio print_int
+ 	syscall				#lancio print_int
 		
 	#EXIT					
-	li $v0,4				#Seleziono il print_string
+	li $v0,4			#Seleziono il print_string
 	la $a0,arrivederci		#$a0 contiene l'indirizzo di arrivederci
 	syscall
 
-	li $v0,10				#Seleziono l' exit (termina esecuzione)
-	syscall					#lancio exit (termina esecuzione)
+	li $v0,10			#Seleziono l' exit (termina esecuzione)
+	syscall				#lancio exit (termina esecuzione)
 
 		
 ### INIZIO PROCEDURA POPOLAMENTO MATRICE
@@ -61,69 +61,69 @@ popola_matrice:
 	move $t1,$a1			#$t1 = $a1
 	
 	chiedi_ordine:
-	li $v0,4				#Seleziono il print_string
-	la $a0,ordine_matrice	#$a0 contiene l'indirizzo di ordine_matrice
+	li $v0,4			#Seleziono il print_string
+	la $a0,ordine_matrice		#$a0 contiene l'indirizzo di ordine_matrice
 	syscall
 
-	li $v0,5				#5 read int chiedo l'ordine della matrice
-	syscall					#lancio print_int
+	li $v0,5			#5 read int chiedo l'ordine della matrice
+	syscall				#lancio print_int
 	
-								#if ($v0 > 4 OR $v0 <= 4) ? goto(chiedi_ordine) : pc+4 
+					#if ($v0 > 4 OR $v0 <= 4) ? goto(chiedi_ordine) : pc+4 
 	bgt $v0,4,chiedi_ordine		#if ($v0 > 4)? goto(chiedi_ordine) : pc+4
 	ble $v0,0,chiedi_ordine		#if ($v0 <= 4)? goto(chiedi_ordine) : pc+4
 						
 	move $t0,$v0			#sposto l'ordine della matrice nella registro $t0
 	
-	li $t3,0 				#inizializzo $t3 ; contatore first_for
+	li $t3,0 			#inizializzo $t3 ; contatore first_for
 	for_riga:
 	beq $t3,$t0,end_for_riga	#Se counter = ordine matrice ? goto(end_first_for) : pc+4
 		
-	li $v0,4				#Seleziono il print_string
+	li $v0,4			#Seleziono il print_string
 	la $a0,riga_n			#$a0 contiene l'indirizzo di riga_n
-	syscall 				#lancio print_string
+	syscall 			#lancio print_string
 	
-	li $v0,1				#Seleziono il print_int
+	li $v0,1			#Seleziono il print_int
 	move $a0,$t3			#$a0 = $t3(contatore)
-	syscall					#Lancio print_int
+	syscall				#Lancio print_int
 	
-	li $v0,4				#Seleziono il print_string
+	li $v0,4			#Seleziono il print_string
 	la $a0,acapo			#$a0 contiene l'indirizzo di acapo
-	syscall 				#Lancio print_string
+	syscall 			#Lancio print_string
 	
-	li $t4,0 				#inizializzo $t4 ; (contatore for_colonna)
+	li $t4,0 			#inizializzo $t4 ; (contatore for_colonna)
 	for_colonna:
 	beq $t4,$t0,end_for_colonna	#if ($t4 = $t0)? goto(end_for_colonna) : pc+4
 	
-	li $v0,4				#Seleziono il print_string
+	li $v0,4			#Seleziono il print_string
 	la $a0,init_m			#$a0 contiene l'indirizzo di init_m
-	syscall 				#lancio print_string
+	syscall 			#lancio print_string
 	
-	li $v0,1				#Seleziono il print_int
+	li $v0,1			#Seleziono il print_int
 	move $a0,$t3			#$a0 = $t3 
-	syscall					#Lancio il print_int
+	syscall				#Lancio il print_int
 	
-	li $v0,11				#Seleziono il print_char
-	li $a0,']'				#$a0 contiene il carattere ']'
-	syscall 				#lancio print_char
+	li $v0,11			#Seleziono il print_char
+	li $a0,']'			#$a0 contiene il carattere ']'
+	syscall 			#lancio print_char
 	
-	li $v0,11				#Seleziono il print_char
-	li $a0,'['				#$a0 contiene il carattere '['
-	syscall					#Lancio il print_char
+	li $v0,11			#Seleziono il print_char
+	li $a0,'['			#$a0 contiene il carattere '['
+	syscall				#Lancio il print_char
 		
-	li $v0,1				#Seleziono il print_int
+	li $v0,1			#Seleziono il print_int
 	move $a0,$t4			#$a0 = $t4 ; 
-	syscall					#Lancio il print_int
+	syscall				#Lancio il print_int
 	
-	li $v0,11				#Seleziono il print_char
-	li $a0,']'				#$a0 contiene il carattere ']'
-	syscall					#Lancio il print_char
+	li $v0,11			#Seleziono il print_char
+	li $a0,']'			#$a0 contiene il carattere ']'
+	syscall				#Lancio il print_char
 	
-	li $v0,4				#Seleziono il print_string
+	li $v0,4			#Seleziono il print_string
 	la $a0,infreccia		#$a0 contiene l'indirizzo di infreccia
-	syscall					#Lancio il print_string
+	syscall				#Lancio il print_string
 	 
-	li $v0,5				#Selezione il read_int
-	syscall					#Lancio il read_int
+	li $v0,5			#Selezione il read_int
+	syscall				#Lancio il read_int
 			
 	sw $v0,0($t1)			#Salvo $vo in $t1 ; Aggiungo il numero acquisito al matrice 
 	add $t1,$t1,4			#Aggiorno il puntatore della matrice spostandomi di +4 byte elemento [i]+1
@@ -139,7 +139,7 @@ end_popola_matrice:
 	
 	move $v0,$t0			#$v0 = ordine matrice
 	move $v1,$a1			#$v1 = indirizzo matrice
-	jr $ra					#Jump register return address
+	jr $ra				#Jump register return address
 ### FINE PROCEDURA POPOLAMENTO MATRICE
 
 
@@ -157,10 +157,10 @@ laplace:
 caso_base_uno: 				#ordine matrice = 1	 	 		
 	lw $t0,0($a1)			#Carico l'elemento m[0][0]
 	move $v0,$t0			#$v0 = $t0 ; 
-	j fine					#goto(fine)
+	j fine				#goto(fine)
 	
 caso_base_due: 				#ordine matrice = 2
-							#determinante = m[0][0]*m[1][1]-m[0][1]*m[1][0];
+					#determinante = m[0][0]*m[1][1]-m[0][1]*m[1][0];
   	lw $t0,0($a1)			#$t0 = m[0][0]	
  	lw $t1,4($a1)			#$t1 = m[0][1]
 	lw $t2,8($a1)			#$t2 = m[1][0]	
@@ -171,7 +171,7 @@ caso_base_due: 				#ordine matrice = 2
  	sub $t0,$t4,$t5			# $t0 = $t4 - $t5
  				
 	move $v0,$t0			#$v0 = $t0 ; $t0 = determinante calcolato
-	j fine					#goto(fine)
+	j fine				#goto(fine)
 		
 caso_base_tre: 				#ordine matrice = 3 Utilizzo la regola di Sarrus!
 	 				#determinante = m[0][0]*m[1][1]*m[2][2]+
@@ -181,8 +181,8 @@ caso_base_tre: 				#ordine matrice = 3 Utilizzo la regola di Sarrus!
 				 	#		m[2][1]*m[1][2]*m[0][0]-
 				 	#		m[2][2]*m[1][0]*m[0][1]
  	
- 	addi $sp,$sp,-60			#abbasso lo stack di 16 word
-	sw $t0,0($sp)				#salvataggio registri nello stack pointer
+ 	addi $sp,$sp,-60		#abbasso lo stack di 16 word
+	sw $t0,0($sp)			#salvataggio registri nello stack pointer
 	sw $t1,4($sp)
 	sw $t2,8($sp)
 	sw $t3,12($sp)
@@ -253,7 +253,7 @@ caso_base_tre: 				#ordine matrice = 3 Utilizzo la regola di Sarrus!
 	lw $s4,52($sp)
 	lw $s5,56($sp)
 	add $sp,$sp,60			#rialzo lo stack pointer di 64 byte
-	j fine					#goto(fine)
+	j fine				#goto(fine)
 
 caso_quattro: 				#cardinalità = 4
 		  							
@@ -270,30 +270,30 @@ caso_quattro: 				#cardinalità = 4
 	
 	move $s5,$s6			# $s5 = $s6 ; sposto l'indirizzo della sottomatrice in $s5
 	
-	li $v0,4				#Seleziono il print_string
+	li $v0,4			#Seleziono il print_string
 	la $a0,sottomat			#$a0 contiene l'indirizzo di sottomatrice
-	syscall 				#Lancio il print_string
+	syscall 			#Lancio il print_string
 
-	li $v0,4				#Seleziono il print_string
+	li $v0,4			#Seleziono il print_string
 	la $a0,init_m			#$a0 contiene l'indirizzo di sottomatrice
-	syscall 				#Lancio il print_string
+	syscall 			#Lancio il print_string
 	
-	li $v0,1				#Seleziono il print_int
+	li $v0,1			#Seleziono il print_int
 	div $a0,$t0,$s3			#$a0 = $t0
-	syscall					#Lancio il print_it
+	syscall				#Lancio il print_it
 	
-	li $v0,4				#Seleziono il print_int
+	li $v0,4			#Seleziono il print_int
 	la $a0,fine_m_zero		#$a0 = $t0
 	syscall
 	
-	li $v0,4				#Seleziono il print_string
+	li $v0,4			#Seleziono il print_string
 	la $a0,acapo			#$a0 contiene l'indirizzo di acapo
-	syscall 				#Lancio il print_string
+	syscall 			#Lancio il print_string
 	
 	#### scorro l'intera matrice per riga
-	li $t1,0				#inizialiazzo il contatore $t1
+	li $t1,0			#inizialiazzo il contatore $t1
 	add $t3,$t0,$s3
-	for_item:				#equivalente foreach scorro tutti gli elementi della matrice
+	for_item:			#equivalente foreach scorro tutti gli elementi della matrice
 	beq $t1,$s1,end_for_item	#se $t1 è uguale all'ultimo elemento vai alla fine
 	
 	##Calcolo range riga da evitare
@@ -301,7 +301,7 @@ caso_quattro: 				#cardinalità = 4
 	
 	# controllo se l'elemento è nella prima colonna della matrice m[?][0]
 	div $t1,$s3  			#divido elemento per lo scarto riga, se il resto è uguale a 0 vuol dire che è un elemento della prima colonna
-	mfhi $t6				#$t6 = reminder
+	mfhi $t6			#$t6 = reminder
 	
 	beq $t6,0,jfine			#if ($t6 = 0) ? goto(jfine) : pc + 4
 	
@@ -311,14 +311,14 @@ caso_quattro: 				#cardinalità = 4
 	blt $t1,$t0,avanti		#if ($t1 < $t0) ? goto(avanti) : pc+4
 	j maggiore 
 	avanti:
-	li $t6,1				#Flag $t6=1
+	li $t6,1			#Flag $t6=1
 	j as
 	
 	maggiore:
 	bge $t1,$t3,s_avanti		#if ($t1 >= $t0) ? goto(s_avanti) : pc+4
 	j as
 	s_avanti:
-	li $t6,1				#Flag $t6=1
+	li $t6,1			#Flag $t6=1
 	as:
 		
 	bne $t6,1,jfine			#if ($t6 != 1) ? goto(jfine) : pc+4
@@ -332,13 +332,13 @@ caso_quattro: 				#cardinalità = 4
 	sw $t4,0($s5)			#Salvo $t4 nella sottomatrice
 	addi $s5,$s5,4			#e mi sposto di 4 byte 
 	
-	li $v0,1				#Seleziono il print_int
+	li $v0,1			#Seleziono il print_int
 	move $a0,$t4			#$a0 = $t4
-	syscall					#Lancio il print_int
+	syscall				#Lancio il print_int
 		
-	li $v0,11				#Seleziono il print_char
-	li $a0,' '				#$a0 contiene il carattere ' ' (è uno spazio)
-	syscall 				#Lancio il print_char
+	li $v0,11			#Seleziono il print_char
+	li $a0,' '			#$a0 contiene il carattere ' ' (è uno spazio)
+	syscall 			#Lancio il print_char
 			
 	#fine carico in sottomatrice
 	
@@ -347,14 +347,14 @@ caso_quattro: 				#cardinalità = 4
 	#### fine calcolo range
 							
 	addi $t1,$t1,4			# $t1 = $t1 + 4
-	j for_item				#goto (for_item)
+	j for_item			#goto (for_item)
 	end_for_item:	
 	# fine stampa array
 			
 	#organizziamoci e iniziamo la ricorsione		
 	add $a0,$s2,-1			#Ordine sottomatrice = ordine_matrice-1
 	move $a1,$s6			#$a1 = $s6
-	jal laplace				#Chiamata ricorsiva Jump And Link Laplace
+	jal laplace			#Chiamata ricorsiva Jump And Link Laplace
 	move $t9,$v0			#$t9 = $v0 (al ritorno della chiamata ricorsiva $v0 contiene il determinante della sottomatrice calcolato)
 	
 	#procediamo al calcolo del complemento algebrico	
@@ -362,37 +362,37 @@ caso_quattro: 				#cardinalità = 4
 	lw $t8,0($t8)			#$t8 = $t8 + offset
 	
 	#stampa numero caporiga
-	li $v0,4				#Seleziono il print_string
+	li $v0,4			#Seleziono il print_string
 	la $a0,caporiga			#$a0 contiene l'indirizzo di caporiga
-	syscall 				#Lancio print string
+	syscall 			#Lancio print string
 	
-	li $v0,1				#Seleziono print_int
+	li $v0,1			#Seleziono print_int
 	move $a0,$t8			#$a0 contiene $t8 (caporiga)	
-	syscall					#Lancio print_int
+	syscall				#Lancio print_int
 	#
 	
 	mul $t9,$t9,$t8			#$t9 = $t9 * $t8 ; caporiga * determinante sottomatrice
 
 	#se l'indice riga è pari allora moltiplica per 1 altrimenti -1
 	div $t8,$t0,$s3 		#$t8 = $t0 / $s3 ; calcolo indice riga
-	li $t6,2				#$t6 = 1
-	div $t8,$t6				# $t8/$t6
-	mfhi $t8				# $t8 = reminder
+	li $t6,2			#$t6 = 1
+	div $t8,$t6			# $t8/$t6
+	mfhi $t8			# $t8 = reminder
 	bne $t8,0,menouno		# if ($t8 != 0) ? goto(menouno) : pc+4
 	#mul $t9,$t9,1 			#inutile moltiplicare per uno! il risultato non cambia risparmio un istruzione
-	j enduno				#goto(enduno)
+	j enduno			#goto(enduno)
 	menouno:
 	mul $t9,$t9,-1			#$t9 = $t9 * -1
 	enduno:
 			
 	## Stampa complemento algebrico
-	li $v0,4				#Seleziono il print_string
+	li $v0,4			#Seleziono il print_string
 	la $a0,complemento_algebrico	#$a0 contiene l'indirizzo di complemento_algebrico
-	syscall 				#Lancio il print_string
+	syscall 			#Lancio il print_string
 	
-	li $v0,1				#Seleziono il print_int
+	li $v0,1			#Seleziono il print_int
 	move $a0,$t9			#$a0 = $t9 ; $t9 contiene il complemento algebrico 
-	syscall					#Lancio print_int
+	syscall				#Lancio print_int
 		
 	add $s7,$s7,$t9			#$s7 accumulatore determinanti!	
 	add $v0,$zero,$s7		#$v0 = $s7 ; imposto il parametro in uscita
@@ -405,5 +405,5 @@ caso_quattro: 				#cardinalità = 4
 		
 	lw $ra,0($sp)			#Recupero il return address dallo stack pointer
 	add $sp,$sp,4			#Alzo lo stack pointer di 4 byte
-	jr $ra					#Jump register return adress
+	jr $ra				#Jump register return adress
 ## FINE PROCEDURA LAPLACE
